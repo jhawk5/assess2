@@ -159,12 +159,15 @@ vectors.S: vectors.pl
 	# chmod +x vectors.pl
 	./vectors.pl > vectors.S
 
+
+
 ULIB = ulib.o usys.o printf.o umalloc.o
 
 _%: %.o $(ULIB)
 	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ $^
 	$(OBJDUMP) -S $@ > $*.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > $*.sym
+
 
 _forktest: forktest.o $(ULIB)
 	# forktest has less library code linked in - needs to be small
@@ -175,6 +178,7 @@ _forktest: forktest.o $(ULIB)
 mkfs: mkfs.c fs.h
 	gcc -Werror -Wall -o mkfs mkfs.c
 
+
 # Prevent deletion of intermediate files, e.g. cat.o, after first build, so
 # that disk image changes after first build are persistent until clean.  More
 # details:
@@ -182,6 +186,7 @@ mkfs: mkfs.c fs.h
 .PRECIOUS: %.o
 
 UPROGS=\
+	_test\
 	_cat\
 	_echo\
 	_forktest\
@@ -197,6 +202,7 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
+
 
 fs.img: mkfs $(UPROGS)
 	./mkfs fs.img $(UPROGS)

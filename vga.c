@@ -534,7 +534,7 @@ int	videosetmode(uchar mode) {
 			// 640 x 480 x 16 graphics mode
 			writevgaregisters(registers_640x480x16);
 			currentVideoMode = 0x12;
-			//clear640x400x16();
+			clear640x400x16();
 			break;
 
 		case 0x13:

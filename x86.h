@@ -146,3 +146,4 @@ struct trapframe {
     ushort ss;
     ushort padding6;
 };
+

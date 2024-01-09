@@ -9,6 +9,8 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
+struct rect;
+struct GraphicsOperations;
 
 // bio.c
 void            binit(void);
@@ -59,7 +61,16 @@ void            stati(struct inode*, struct stat*);
 int             writei(struct inode*, char*, uint, uint);
 
 // graphics.c 
-void            clear320x200x256();
+int setpixel(int hdc, int x, int y);
+int moveto(int hdc, int x, int y);
+int lineto(int hdc, int x, int y);
+void clear320x200x256();
+int setpencolour(int index, int r, int g, int b);
+int selectpen(int hdc, int index);
+int fillrect(int, struct rect*);
+int beginpaint(int hwnd);
+int endpaint(int hdc, struct GraphicsOperations*, int operationcount);
+void clear640x400x16();
 
 // ide.c
 void            ideinit(void);
@@ -183,7 +194,7 @@ void            uartputc(int);
 int				videosetmode(uchar mode);
 uchar			getcurrentvideomode();
 void			setplane(uchar plane);
-uchar *			getframebufferbase();
+uchar *			getframebufferBase();
 
 // vm.c
 void            seginit(void);
